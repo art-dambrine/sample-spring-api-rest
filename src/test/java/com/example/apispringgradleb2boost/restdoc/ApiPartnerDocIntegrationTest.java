@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.constraints.ConstraintDescriptions;
@@ -18,16 +19,18 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -57,7 +60,7 @@ public class ApiPartnerDocIntegrationTest {
         this.mockMvc.perform(get("/partners"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("B2boost")))
+                .andExpect(content().string(containsString("expirationTime")))
                 .andDo(document("getAllPartners"));
     }
 
@@ -74,6 +77,25 @@ public class ApiPartnerDocIntegrationTest {
                                         .description("The id of the partner" +
                                                 collectionToDelimitedString(desc.descriptionsForProperty("id"), ". ")),
                                 fieldWithPath("name").description("The name of the partner"),
+                                fieldWithPath("reference").description("The unique reference of the partner"),
+                                fieldWithPath("locale").description("A valid Locale of the partner"),
+                                fieldWithPath("expirationTime").description("The ISO-8601 UTC date time when the partner is going to expire"))));
+    }
+
+    @Test
+    @DisplayName("Example POST /partner")
+    public void whenPostPartner_thenSuccessful() throws Exception {
+        Map<String, Object> partner = new HashMap<>();
+        partner.put("name", "UPS");
+        partner.put("reference", "FYI25");
+        partner.put("locale", "en_BE");
+        partner.put("expirationTime", "2013-10-03T12:18:46+01:00");
+
+        this.mockMvc.perform(post("/partner").contentType(MediaType.APPLICATION_JSON)
+                        .content(this.objectMapper.writeValueAsString(partner)))
+                .andExpect(status().isCreated())
+                .andDo(document("createPartner", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+                        requestFields(fieldWithPath("name").description("The name of the partner"),
                                 fieldWithPath("reference").description("The unique reference of the partner"),
                                 fieldWithPath("locale").description("A valid Locale of the partner"),
                                 fieldWithPath("expirationTime").description("The ISO-8601 UTC date time when the partner is going to expire"))));
