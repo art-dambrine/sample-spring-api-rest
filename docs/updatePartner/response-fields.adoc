@@ -1,0 +1,24 @@
+|===
+|Path|Type|Description
+
+|`+id+`
+|`+Number+`
+|The id of the updated partner
+
+|`+name+`
+|`+String+`
+|The name of the partner
+
+|`+reference+`
+|`+String+`
+|The unique reference of the partner
+
+|`+locale+`
+|`+String+`
+|A valid Locale of the partner
+
+|`+expirationTime+`
+|`+String+`
+|The ISO-8601 UTC date time when the partner is going to expire
+
+|===

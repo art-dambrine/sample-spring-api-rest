@@ -34,11 +34,11 @@ Most of the following sections have been generated with  https://spring.io/proje
 A `GET` request is used to access all the partners read.
 
 ==== Request structure
-include::getAllPartners/http-request.adoc[]
+include::./getAllPartners/http-request.adoc[]
 
 
 ==== Example response
-include::getAllPartners/http-response.adoc[]
+include::./getAllPartners/http-response.adoc[]
 
 ==== CURL request
 include::getAllPartners/curl-request.adoc[]
@@ -61,7 +61,7 @@ include::getAPartner/curl-request.adoc[]
 
 
 === Accessing the partner POST
-A `POST` request is used to add a partners resource.
+A `POST` request is used to add a partner resource.
 
 ==== Request structure
 include::createPartner/http-request.adoc[]
@@ -71,3 +71,38 @@ include::createPartner/http-response.adoc[]
 
 ==== CURL request
 include::createPartner/curl-request.adoc[]
+
+=== Accessing the partner PUT
+A `PUT` request is used to update a partner resource.
+
+==== Request structure
+include::./updatePartner/http-request.adoc[]
+
+==== Example response
+include::./updatePartner/http-response.adoc[]
+
+==== CURL request
+include::./updatePartner/curl-request.adoc[]
+
+=== Accessing the partner DELETE
+A `DELETE` request is used to delete the partner.
+
+==== Request structure
+include::./deletePartner/http-request.adoc[]
+
+==== Path Parameters
+include::./deletePartner/path-parameters.adoc[]
+
+==== Example response
+include::./deletePartner/http-response.adoc[]
+
+==== CURL request
+include::./deletePartner/curl-request.adoc[]
+
+
+== Conseils de déploiement
+Build le jar pour le deploiement :
+----
+gradle clean bootJar
+----
+NOTE: build/libs/monjardeproduction.jar

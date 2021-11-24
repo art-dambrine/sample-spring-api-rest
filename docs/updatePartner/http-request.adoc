@@ -1,0 +1,9 @@
+[source,http,options="nowrap"]
+----
+PUT /partner/3 HTTP/1.1
+Content-Type: application/json
+Content-Length: 97
+Host: localhost:8080
+
+{"reference":"FYI255","expirationTime":"2022-05-23T12:18:46+01:00","name":"DHL","locale":"de_DE"}
+----

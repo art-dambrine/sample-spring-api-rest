@@ -1,0 +1,8 @@
+.+/partner/{id}+
+|===
+|Parameter|Description
+
+|`+id+`
+|The id of the partner to update
+
+|===

@@ -1,0 +1,8 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 104
+
+{"id":3,"name":"DHL","reference":"FYI255","locale":"de_DE","expirationTime":"2022-05-23T12:18:46+01:00"}
+----

@@ -25,8 +25,7 @@ import java.util.Map;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -96,6 +95,37 @@ public class ApiPartnerDocIntegrationTest {
                 .andExpect(status().isCreated())
                 .andDo(document("createPartner", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
                         requestFields(fieldWithPath("name").description("The name of the partner"),
+                                fieldWithPath("reference").description("The unique reference of the partner"),
+                                fieldWithPath("locale").description("A valid Locale of the partner"),
+                                fieldWithPath("expirationTime").description("The ISO-8601 UTC date time when the partner is going to expire"))));
+    }
+
+    @Test
+    @DisplayName("Example DELETE /partner")
+    public void whenDeletePartner_thenSuccessful() throws Exception {
+        this.mockMvc.perform(delete("/partner/{id}", 2))
+                .andExpect(status().isOk())
+                .andDo(document("deletePartner", pathParameters(parameterWithName("id").description("The id of the partner to delete"))));
+    }
+
+    @Test
+    @DisplayName("Example PUT /partner")
+    public void whenUpdatePartner_thenSuccessful() throws Exception {
+
+        ConstraintDescriptions desc = new ConstraintDescriptions(Partner.class);
+
+        Map<String, Object> partner = new HashMap<>();
+        partner.put("name", "DHL");
+        partner.put("reference", "FYI255");
+        partner.put("locale", "de_DE");
+        partner.put("expirationTime", "2022-05-23T12:18:46+01:00");
+
+        this.mockMvc.perform(put("/partner/{id}", 3).contentType(MediaType.APPLICATION_JSON)
+                        .content(this.objectMapper.writeValueAsString(partner)))
+                .andExpect(status().isOk())
+                .andDo(document("updatePartner", pathParameters(parameterWithName("id").description("The id of the partner to update")),
+                        responseFields(fieldWithPath("id").description("The id of the updated partner" + collectionToDelimitedString(desc.descriptionsForProperty("id"), ". ")),
+                                fieldWithPath("name").description("The name of the partner"),
                                 fieldWithPath("reference").description("The unique reference of the partner"),
                                 fieldWithPath("locale").description("A valid Locale of the partner"),
                                 fieldWithPath("expirationTime").description("The ISO-8601 UTC date time when the partner is going to expire"))));
