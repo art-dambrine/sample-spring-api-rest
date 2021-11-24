@@ -3,6 +3,8 @@ package com.example.apispringgradleb2boost.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Locale;
+
 
 @Data
 @Entity
@@ -15,11 +17,13 @@ public class Partner {
     @Column(name = "company_name")
     private String name;
 
-    @Column(name = "ref", unique=true)
+    @Column(name = "ref", unique = true)
     private String reference;
 
-    private String locale;
+    private Locale locale;
 
     @Column(name = "expires")
     private String expirationTime;
+
+
 }

@@ -7,14 +7,12 @@ import com.example.apispringgradleb2boost.service.PartnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Optional;
 
 @RestController
@@ -44,14 +42,14 @@ public class PartnerController {
      * @return A Partner object
      */
     @GetMapping("/partner/{id}")
-    public Partner getPartnerById(@PathVariable("id") final Long Id, HttpServletResponse response) throws IOException {
+    public Partner getPartnerById(@PathVariable("id") final Long Id, HttpServletResponse response) throws CustomError {
 
         Optional<Partner> partner = partnerService.getPartnerById(Id);
         if (partner.isPresent()) {
             return partner.get();
         } else {
             // Error handling when !partner.isPresent()
-            handlePartnerResourceIsNotPresentReturnNotFound(Id, response);
+            handlePartnerResourceIsNotPresentReturnNotFound(Id);
             return null;
         }
     }
@@ -77,32 +75,13 @@ public class PartnerController {
      */
     @PutMapping("/partner/{id}")
     public Partner updatePartner(@PathVariable("id") final Long Id, @RequestBody Partner partner,
-                                 HttpServletResponse response) throws IOException {
+                                 HttpServletResponse response) throws CustomError {
 
         Optional<Partner> p = partnerService.getPartnerById(Id);
         if (p.isPresent()) {
-            Partner currentPartner = p.get();
-
-            String name = partner.getName();
-            if (name != null) {
-                currentPartner.setName(name);
-            }
-            String reference = partner.getReference();
-            if (reference != null) {
-                currentPartner.setReference(reference);
-            }
-            String locale = partner.getLocale();
-            if (locale != null) {
-                currentPartner.setLocale(locale);
-            }
-            String expirationTime = partner.getExpirationTime();
-            if (expirationTime != null) {
-                currentPartner.setExpirationTime(expirationTime);
-            }
-            partnerService.savePartner(currentPartner);
-            return currentPartner;
+            return partnerService.updatePartner(partner, p);
         } else {
-            handlePartnerResourceIsNotPresentReturnNotFound(Id, response);
+            handlePartnerResourceIsNotPresentReturnNotFound(Id);
             return null;
         }
     }
@@ -114,35 +93,28 @@ public class PartnerController {
      * @param Id - The id of the partner to delete
      */
     @DeleteMapping("/partner/{id}")
-    public void deletePartner(@PathVariable("id") final Long Id, HttpServletResponse response) throws IOException {
+    public void deletePartner(@PathVariable("id") final Long Id, HttpServletResponse response) throws CustomError {
         Optional<Partner> partner = partnerService.getPartnerById(Id);
         if (partner.isPresent()) {
             partnerService.deletePartner(Id);
         } else {
-            handlePartnerResourceIsNotPresentReturnNotFound(Id, response);
+            handlePartnerResourceIsNotPresentReturnNotFound(Id);
         }
 
     }
 
     /**
-     * Partner not found handling - Extraction of duplicated code for
+     * Partner not found handling - Extraction of duplicated code when !partner.isPresent()
      *
      * @param Id
-     * @param response
-     * @throws IOException
+     * @throws CustomError
      */
-    private void handlePartnerResourceIsNotPresentReturnNotFound(@PathVariable("id") Long Id, HttpServletResponse response) throws IOException {
+    private void handlePartnerResourceIsNotPresentReturnNotFound(final Long Id) throws CustomError {
         // Error handling when !partner.isPresent()
-        response.setStatus(HttpStatus.NOT_FOUND.value());
-        response.setContentType(String.valueOf(MediaType.APPLICATION_JSON));
-        response.setCharacterEncoding("UTF-8");
-
-        PrintWriter out = response.getWriter();
-        out.print(new Gson().toJson(
+        throw new CustomError(HttpStatus.NOT_FOUND.value(), new Gson().toJson(
                 new CustomError(HttpStatus.NOT_FOUND.value(),
                         String.format("Partner with id %d not found!", Id))
         ));
-        out.flush();
     }
 
 }
