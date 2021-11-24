@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Min;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
@@ -40,7 +41,7 @@ public class PartnerService {
     }
 
     public Partner savePartner(Partner partner) {
-        if (localeIsValid(partner.getLocale())) {
+        if (localeIsValid(partner.getLocale()) && utcDateTimeValidation(partner.getExpirationTime())) {
             return partnerRepository.save(partner);
         } else {
             return null;
@@ -63,7 +64,7 @@ public class PartnerService {
             currentPartner.setLocale(locale);
         }
         String expirationTime = partner.getExpirationTime();
-        if (expirationTime != null) {
+        if (utcDateTimeValidation(expirationTime)) {
             currentPartner.setExpirationTime(expirationTime);
         }
         savePartner(currentPartner);
@@ -87,6 +88,25 @@ public class PartnerService {
             throw new CustomError(HttpStatus.BAD_REQUEST.value(), new Gson().toJson(
                     new CustomError(HttpStatus.BAD_REQUEST.value(),
                             String.format("Locale %s is an invalid Locale!", locale.toString()))
+            ));
+        }
+    }
+
+    /**
+     * DateTime validation (ISO-8601 UTC date time) before calling database
+     *
+     * @param utcDateTimeToCheck
+     * @return Boolean
+     */
+    private Boolean utcDateTimeValidation(String utcDateTimeToCheck) {
+        try {
+            ZonedDateTime.parse(utcDateTimeToCheck);
+            return true;
+        } catch (Exception e) {
+            throw new CustomError(HttpStatus.BAD_REQUEST.value(), new Gson().toJson(
+                    new CustomError(HttpStatus.BAD_REQUEST.value(),
+                            String.format("Date %s is an invalid ISO-8601 UTC date time! Should be something like %s",
+                                    utcDateTimeToCheck, "2017-10-03T12:18:46+00:00"))
             ));
         }
     }
