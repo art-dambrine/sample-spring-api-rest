@@ -37,7 +37,7 @@ public class PartnerController {
     /**
      * Read - Get one partner
      *
-     * @param Id The id of the partner
+     * @param Id       The id of the partner
      * @param response
      * @return A Partner object
      */
@@ -58,24 +58,24 @@ public class PartnerController {
      * Create - Add a new partner
      *
      * @param partner An object partner
+     * @param response
      * @return The partner object saved
      */
     @PostMapping("/partner")
-    public Partner createPartner(@RequestBody Partner partner) {
+    public Partner createPartner(@RequestBody Partner partner, HttpServletResponse response) {
+        response.setStatus(HttpStatus.CREATED.value());
         return partnerService.savePartner(partner);
     }
 
     /**
      * Update - Update an existing partner
      *
-     * @param Id      - The id of the partner to update
-     * @param partner - The partner object updated
-     * @param response
+     * @param Id       - The id of the partner to update
+     * @param partner  - The partner object updated
      * @return The partner object updated
      */
     @PutMapping("/partner/{id}")
-    public Partner updatePartner(@PathVariable("id") final Long Id, @RequestBody Partner partner,
-                                 HttpServletResponse response) throws CustomError {
+    public Partner updatePartner(@PathVariable("id") final Long Id, @RequestBody Partner partner) throws CustomError {
 
         Optional<Partner> p = partnerService.getPartnerById(Id);
         if (p.isPresent()) {
@@ -90,7 +90,7 @@ public class PartnerController {
      * Delete - Delete a partner
      *
      * @param response
-     * @param Id - The id of the partner to delete
+     * @param Id       - The id of the partner to delete
      */
     @DeleteMapping("/partner/{id}")
     public void deletePartner(@PathVariable("id") final Long Id, HttpServletResponse response) throws CustomError {
