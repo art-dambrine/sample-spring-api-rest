@@ -2,22 +2,20 @@ package com.example.apispringgradleb2boost.model;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "partners")
 public class Partner {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "company_name")
     private String name;
 
-    @Column(name = "ref")
+    @Column(name = "ref", unique=true)
     private String reference;
 
     private String locale;
