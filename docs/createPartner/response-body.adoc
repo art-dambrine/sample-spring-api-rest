@@ -1,0 +1,10 @@
+[source,options="nowrap"]
+----
+{
+  "id" : 13,
+  "name" : "UPS",
+  "reference" : "FYI25",
+  "locale" : "en_BE",
+  "expirationTime" : "2013-10-03T12:18:46+01:00"
+}
+----

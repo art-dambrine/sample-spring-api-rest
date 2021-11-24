@@ -1,0 +1,8 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 1360
+
+[{"id":1,"name":"B2boost","reference":"FYI1","locale":"en_BE","expirationTime":"2022-11-24 17:46:00+01"},{"id":2,"name":"Proximus","reference":"FYI2","locale":"en_BE","expirationTime":"2022-11-24 17:46:00+01"},{"id":3,"name":"KBC Bank","reference":"FYI3","locale":"en_BE","expirationTime":"2022-11-24 17:46:00+01"},{"id":4,"name":"AB InBev","reference":"FYI4","locale":"en_BE","expirationTime":"2022-11-24 17:46:00+01"},{"id":5,"name":"Spotify","reference":"FYI5","locale":"sv_SE","expirationTime":"2022-11-24 17:46:00+01"},{"id":6,"name":"AMSOM-Habitat","reference":"FYI6","locale":"fr_FR","expirationTime":"2022-11-24 17:46:00+01"},{"id":7,"name":"Microsoft","reference":"FYI7","locale":"en_US","expirationTime":"2022-11-24 17:46:00-04"},{"id":8,"name":"Sony","reference":"FYI8","locale":"ja_JP","expirationTime":"2022-11-24 17:46:00+09"},{"id":9,"name":"Intel","reference":"FYI9","locale":"en_US","expirationTime":"2022-11-24 17:46:00-04"},{"id":10,"name":"Cisco","reference":"FYI10","locale":"en_US","expirationTime":"2022-11-24 17:46:00-04"},{"id":11,"name":"Dell","reference":"FYI11","locale":"en_US","expirationTime":"2022-11-24 17:46:00-04"},{"id":12,"name":"Canonical","reference":"FYI12","locale":"en_US","expirationTime":"2022-11-24 17:46:00-04"},{"id":13,"name":"UPS","reference":"FYI25","locale":"en_BE","expirationTime":"2013-10-03 12:18:46+01"}]
+----

@@ -1,0 +1,14 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 129
+
+{
+  "id" : 1,
+  "name" : "B2boost",
+  "reference" : "FYI1",
+  "locale" : "en_BE",
+  "expirationTime" : "2022-11-24 17:46:00+01"
+}
+----

@@ -1,0 +1,73 @@
+= Api partner for B2Boost
+Doc Writer <https://art-dambrine.ovh [asciidoc @art-dambrine]>
+:toc: left
+:hide-uri-scheme:
+:source-highlighter: highlight.js
+
+== Framework and build tools
+
+For this project I chose to use Spring Boot alongside Gradle.
+
+== Purpose
+
+Small assignment to assess your capacity to execute a specific request
+
+It is taking into account some of the software engineering aspects beyond programming, like (non-exhaustive list):
+
+- Packaging
+- Layering
+- Error management
+- Documentation
+- Deployment aspects
+- Testing
+
+This is a contrived example, especially designed to make the candidates exercise a deeper knowledge of the framework, going beyond simple tutorials that can be found online.
+
+_Credits (Purpose section) : B2Boost_
+
+== Api documentation
+
+In the following document you will find a simple documentation of the API.
+Most of the following sections have been generated with  https://spring.io/projects/spring-restdocs[Spring Rest Docs].
+
+=== Accessing all the partners GET
+A `GET` request is used to access all the partners read.
+
+==== Request structure
+include::getAllPartners/http-request.adoc[]
+
+
+==== Example response
+include::getAllPartners/http-response.adoc[]
+
+==== CURL request
+include::getAllPartners/curl-request.adoc[]
+
+
+=== Accessing the partner GET
+A `GET` request is used to access the partner read.
+
+==== Request structure
+include::getAPartner/http-request.adoc[]
+
+==== Path Parameters
+include::getAPartner/path-parameters.adoc[]
+
+==== Example response
+include::getAPartner/http-response.adoc[]
+
+==== CURL request
+include::getAPartner/curl-request.adoc[]
+
+
+=== Accessing the partner POST
+A `POST` request is used to add a partners resource.
+
+==== Request structure
+include::createPartner/http-request.adoc[]
+
+==== Example response
+include::createPartner/http-response.adoc[]
+
+==== CURL request
+include::createPartner/curl-request.adoc[]

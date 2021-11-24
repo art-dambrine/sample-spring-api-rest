@@ -1,0 +1,14 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 201 Created
+Content-Type: application/json
+Content-Length: 130
+
+{
+  "id" : 13,
+  "name" : "UPS",
+  "reference" : "FYI25",
+  "locale" : "en_BE",
+  "expirationTime" : "2013-10-03T12:18:46+01:00"
+}
+----

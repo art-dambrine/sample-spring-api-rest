@@ -1,0 +1,8 @@
+.+/partner/{id}+
+|===
+|Parameter|Description
+
+|`+id+`
+|id of partner to be searched
+
+|===
