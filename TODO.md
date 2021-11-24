@@ -22,7 +22,7 @@ Date : 23-24 nov 2021
 
 - [x] 5. The application can run with an embedded in-memory database
 
-- [ ] 6. The application will have a health check endpoint
+- [x] 6. The application will have a health check endpoint
 
 - [ ] 7. The application will have suitable functional tests, checking real http functionality
 
