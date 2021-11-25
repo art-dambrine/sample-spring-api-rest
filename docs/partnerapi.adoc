@@ -30,7 +30,41 @@ _Credits (Purpose section) : B2Boost_
 In the following document you will find a simple documentation of the API.
 Most of the following sections have been generated with  https://spring.io/projects/spring-restdocs[Spring Rest Docs].
 
-=== Accessing all the partners GET
+== The partner resource
+
+
+|===
+|Field |Type |Semantics |Example
+
+|id
+|long
+|The database id of the partner
+|1
+
+|name
+|string
+|"The name of the partner"
+|"B2Boost"
+
+|reference
+|string
+|The unique reference of the partner
+|"xxxxx"
+
+|locale
+|string
+|A valid Locale of the partner
+|"en_BE"
+
+|expirationTime
+|string
+|The ISO-8601 UTC date time when the partner is going to expire
+|"2022-11-24 17:46:00+01:00"
+
+|===
+
+
+=== Accessing all the partners GET endpoint
 A `GET` request is used to access all the partners read.
 
 ==== Request structure
@@ -40,11 +74,31 @@ include::./getAllPartners/http-request.adoc[]
 ==== Example response
 include::./getAllPartners/http-response.adoc[]
 
+NOTE: response body within content json array and pagination infos within pageable json object
+
 ==== CURL request
 include::getAllPartners/curl-request.adoc[]
 
+==== Pagination parameters
 
-=== Accessing the partner GET
+.+/partners+
+|===
+|Parameter|Description
+
+|`+from+`
+|offset in the resultset to paginate to (default value is 0)
+|`+size+`
+|Window pagination size (default value is 10)
+|===
+
+==== Exemple CURL request with pagination parameters
+[source,bash]
+----
+$ curl --location --request GET 'http://localhost:8080/partners?from=0&size=4'
+----
+
+
+=== Accessing the partner GET endpoint
 A `GET` request is used to access the partner read.
 
 ==== Request structure
@@ -59,8 +113,38 @@ include::getAPartner/http-response.adoc[]
 ==== CURL request
 include::getAPartner/curl-request.adoc[]
 
+==== Example GET request with errors
+===== Example with invalid value for id
+[source,bash]
+----
+$ curl --location --request GET 'http://localhost:8080/partner/-1'
+----
+Response
+[source,json]
+----
+{
+    "code": 500,
+    "message": "getPartnerById.Id: must be greater than or equal to 1"
+}
+----
+NOTE: The Min value for id is 1
 
-=== Accessing the partner POST
+===== Example partner not found
+[source,bash]
+-----
+$ curl --location --request GET 'http://localhost:8080/partner/3000'
+-----
+Response
+[source,json]
+----
+{
+    "code": 404,
+    "message": "Partner with id 3000 not found!"
+}
+----
+
+
+=== Accessing the partner POST endpoint
 A `POST` request is used to add a partner resource.
 
 ==== Request structure
@@ -72,7 +156,52 @@ include::createPartner/http-response.adoc[]
 ==== CURL request
 include::createPartner/curl-request.adoc[]
 
-=== Accessing the partner PUT
+==== Example POST request with errors
+===== Example with error on create with wrong date format
+[source,bash]
+-----
+$ curl --location --request POST 'http://localhost:8080/partner' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "UPS",
+    "reference": "FYI15",
+    "locale": "en_BE",
+    "expirationTime": "2017-10-03T12:18:46"
+}'
+-----
+Response
+[source,json]
+----
+{
+    "code": 400,
+    "message": "Date 2017-10-03T12:18:46 is an invalid ISO-8601 UTC date time! Should be something like 2017-10-03T12:18:46+00:00"
+}
+----
+NOTE: Here the UTC timezone is missing
+
+===== Example with error on create with invalid locale
+[source,bash]
+-----
+$ curl --location --request POST 'http://localhost:8080/partner' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "UPS",
+    "reference": "FYI15",
+    "locale": "en_BEE",
+    "expirationTime": "2017-10-03T12:18:46+08:00"
+}'
+-----
+Response
+[source,json]
+----
+{
+    "code": 400,
+    "message": "Locale en_BEE is an invalid Locale!"
+}
+----
+NOTE: Here the locale should be en_BE
+
+=== Accessing the partner PUT endpoint
 A `PUT` request is used to update a partner resource.
 
 ==== Request structure
@@ -84,7 +213,54 @@ include::./updatePartner/http-response.adoc[]
 ==== CURL request
 include::./updatePartner/curl-request.adoc[]
 
-=== Accessing the partner DELETE
+==== Example PUT request with errors
+The errors for validating locale and date are the same between PUT and POST
+
+===== Example with error on update with not unique reference
+[source,bash]
+-----
+$ curl --location --request PUT 'http://localhost:8080/partner/1' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "UPS",
+    "reference": "FYI5",
+    "locale": "en_US",
+    "expirationTime": "2022-05-23T12:18:46-05:00"
+}'
+-----
+Response
+[source,json]
+----
+{
+    "code": 500,
+    "message": "could not execute statement; SQL [n/a]; constraint [\"PUBLIC.CONSTRAINT_INDEX_7 ON PUBLIC.PARTNERS(REF) VALUES 5\"; SQL statement:\nupdate partners set expires=?, locale=?, company_name=?, ref=? where id=? [23505-200]]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement"
+}
+----
+NOTE: The reference attribute is configured to be a unique identifier for the partner
+
+===== Example with error on update with partner not found
+[source,bash]
+-----
+$ curl --location --request PUT 'http://localhost:8080/partner/4000' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "UPS",
+    "reference": "FYI50",
+    "locale": "en_US",
+    "expirationTime": "2022-05-23T12:18:46-05:00"
+}'
+-----
+Response
+[source,json]
+----
+{
+    "code": 404,
+    "message": "Partner with id 4000 not found!"
+}
+----
+
+
+=== Accessing the partner DELETE endpoint
 A `DELETE` request is used to delete the partner.
 
 ==== Request structure
@@ -99,10 +275,35 @@ include::./deletePartner/http-response.adoc[]
 ==== CURL request
 include::./deletePartner/curl-request.adoc[]
 
+==== Example DELETE request with errors
+===== Example with error on update with with partner not found
+[source,bash]
+-----
+$ curl --location --request DELETE 'http://localhost:8080/partner/2000'
+-----
+Response
+[source,json]
+----
+{
+    "code": 404,
+    "message": "Partner with id 2000 not found!"
+}
+----
 
-== Conseils de déploiement
-Build le jar pour le deploiement :
+
+== Usefull commands
+_Assuming you are using a bash cli_
+
+=== Run the app in dev env
 ----
-gradle clean bootJar
+./gradlew bootRun
 ----
-NOTE: build/libs/monjardeproduction.jar
+=== Run the test suite with gradle
+----
+./gradlew test
+----
+=== Prepare the jar archive with gradle for deployment
+----
+./gradlew clean bootJar
+----
+NOTE: Path of the output is `build/libs/api-spring-gradle-b2boost-0.0.1-SNAPSHOT.jar`

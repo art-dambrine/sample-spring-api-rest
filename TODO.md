@@ -24,14 +24,14 @@ Date : 23-24 nov 2021
 
 - [x] 6. The application will have a health check endpoint
 
-- [ ] 7. The application will have suitable functional tests, checking real http functionality
+- [x] 7. The application will have suitable functional tests, checking real http functionality
 
 - [x] 8. No authentication/security necessary
 
-- [ ] This document will contain the specification of the REST endpoint, with data definition and error payload specification.
+- [x] This document will contain the specification of the REST endpoint, with data definition and error payload specification.
 
 You should document how to
 
-- [ ] Run the test suite
-- [ ] Run application
+- [x] Run the test suite
+- [x] Run application
 - [ ] Optionally, a commentary on how you would deploy it (not necessary to implement this)
