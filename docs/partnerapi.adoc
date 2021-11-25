@@ -291,6 +291,41 @@ Response
 ----
 
 
+=== Accessing the health check endpoint
+[source,bash]
+-----
+$ curl --location --request GET 'http://localhost:8080/health'
+-----
+Response
+[source,json]
+----
+{
+    "status": "UP",
+    "components": {
+        "db": {
+            "status": "UP",
+            "details": {
+                "database": "H2",
+                "validationQuery": "isValid()"
+            }
+        },
+        "diskSpace": {
+            "status": "UP",
+            "details": {
+                "total": 250438021120,
+                "free": 10172166144,
+                "threshold": 10485760,
+                "exists": true
+            }
+        },
+        "ping": {
+            "status": "UP"
+        }
+    }
+}
+----
+NOTE: For security purpose you can display less by changing `management.endpoint.health.show-details=always` to `never` in `application.properties`
+
 == Useful commands
 _Assuming you are using a bash cli_
 
