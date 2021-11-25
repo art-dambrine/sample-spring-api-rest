@@ -68,11 +68,11 @@ Most of the following sections have been generated with  https://spring.io/proje
 A `GET` request is used to access all the partners read.
 
 ==== Request structure
-include::./getAllPartners/http-request.adoc[]
+include::getAllPartners/http-request.adoc[]
 
 
 ==== Example response
-include::./getAllPartners/http-response.adoc[]
+include::getAllPartners/http-response.adoc[]
 
 NOTE: response body within content json array and pagination infos within pageable json object
 
@@ -205,13 +205,13 @@ NOTE: Here the locale should be en_BE
 A `PUT` request is used to update a partner resource.
 
 ==== Request structure
-include::./updatePartner/http-request.adoc[]
+include::updatePartner/http-request.adoc[]
 
 ==== Example response
-include::./updatePartner/http-response.adoc[]
+include::updatePartner/http-response.adoc[]
 
 ==== CURL request
-include::./updatePartner/curl-request.adoc[]
+include::updatePartner/curl-request.adoc[]
 
 ==== Example PUT request with errors
 The errors for validating locale and date are the same between PUT and POST
@@ -264,16 +264,16 @@ Response
 A `DELETE` request is used to delete the partner.
 
 ==== Request structure
-include::./deletePartner/http-request.adoc[]
+include::deletePartner/http-request.adoc[]
 
 ==== Path Parameters
-include::./deletePartner/path-parameters.adoc[]
+include::deletePartner/path-parameters.adoc[]
 
 ==== Example response
-include::./deletePartner/http-response.adoc[]
+include::deletePartner/http-response.adoc[]
 
 ==== CURL request
-include::./deletePartner/curl-request.adoc[]
+include::deletePartner/curl-request.adoc[]
 
 ==== Example DELETE request with errors
 ===== Example with error on update with with partner not found
@@ -291,7 +291,7 @@ Response
 ----
 
 
-== Usefull commands
+== Useful commands
 _Assuming you are using a bash cli_
 
 === Run the app in dev env
