@@ -39,3 +39,11 @@ You will find the documentation in the **docs.html** at the root of this project
 ```
 ./gradlew clean bootJar
 ```
+> Path of the output is `build/libs/api-spring-gradle-b2boost-0.0.1-SNAPSHOT.jar`
+
+> I already have a built jar that you can find in the `dist` directory 
+
+### Run the dist jar
+```
+java -jar dist/api-spring-gradle-b2boost-0.0.1-SNAPSHOT.jar
+```
