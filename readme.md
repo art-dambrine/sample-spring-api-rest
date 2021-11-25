@@ -47,3 +47,17 @@ You will find the documentation in the **docs.html** at the root of this project
 ```
 java -jar dist/api-spring-gradle-b2boost-0.0.1-SNAPSHOT.jar
 ```
+
+### Config docker minimal
+Build and run
+```
+docker-compose up -d --build
+```
+Simply run
+```
+docker-compose up -d
+```
+Display logs
+```
+docker-compose logs -f
+```

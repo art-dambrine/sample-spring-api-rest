@@ -1,0 +1,9 @@
+version: '2'
+services:
+  # Container myapp
+  web:
+    image: arthur/api-rest-b2boost
+    build: .
+    ports:
+      - "8080:8080"
+    restart: "unless-stopped"
