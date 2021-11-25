@@ -27,7 +27,7 @@ public class PartnerController {
      * @return - An Iterable object of Partner
      */
     @GetMapping("/partners")
-    public Iterable<Partner> getPartners(@Param("from") final Integer from, @Param("size") final Integer size) {
+    public Iterable<Partner> getPartners(@RequestParam(defaultValue = "0") final Integer from, @RequestParam(defaultValue = "10") final Integer size) {
         if (from != null && size != null) {
             return partnerService.getPartners(from, size);
         }
@@ -57,7 +57,7 @@ public class PartnerController {
     /**
      * Create - Add a new partner
      *
-     * @param partner An object partner
+     * @param partner  An object partner
      * @param response
      * @return The partner object saved
      */
@@ -70,8 +70,8 @@ public class PartnerController {
     /**
      * Update - Update an existing partner
      *
-     * @param Id       - The id of the partner to update
-     * @param partner  - The partner object updated
+     * @param Id      - The id of the partner to update
+     * @param partner - The partner object updated
      * @return The partner object updated
      */
     @PutMapping("/partner/{id}")
