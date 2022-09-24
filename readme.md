@@ -1,4 +1,4 @@
-# Api partner for B2Boost 🚀
+# Api partner for sample B2boost 🚀
 
 Doc Writer [art-dambrine.ovh](https://art-dambrine.ovh) [@art-dambrine]
 
